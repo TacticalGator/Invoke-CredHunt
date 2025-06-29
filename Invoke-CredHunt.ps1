@@ -31,25 +31,20 @@ Suppress the scan summary report.
 .PARAMETER MaxFileSizeMB
 Maximum file size to scan in MB. Larger files are skipped. Default: 20.
 
+.PARAMETER IncludeHidden
+Include hidden files and directories in the search. Default: false.
+
 .EXAMPLE
 Invoke-CredHunt
-Scans current directory for default credential keywords.
+Scans current directory for default credential keywords (excludes hidden files).
 
 .EXAMPLE
-Invoke-CredHunt -Path C:\Projects -Keywords "api_key", "secret_token" -CaseSensitive
-Scans C:\Projects for case-sensitive matches of custom keywords.
+Invoke-CredHunt -Path C:\Projects -Keywords "api_key", "secret_token" -CaseSensitive -IncludeHidden
+Scans C:\Projects (including hidden files) for case-sensitive matches of custom keywords.
 
 .EXAMPLE
-Invoke-CredHunt -Path D:\ -Exclude *.log, *.bak -MaxFileSizeMB 50
-Scans D drive excluding log/backup files, processing files up to 50MB.
-
-.EXAMPLE
-Invoke-CredHunt -Path \\server\share -Include *.config, *.env -NoSummary
-Scans network share for configuration files only, suppressing the summary.
-
-.EXAMPLE
-Invoke-CredHunt -Path /var/log -Keywords "password", "passphrase" -MaxContext 50
-Scans Linux log files with custom context size.
+Invoke-CredHunt -Path D:\ -Exclude *.log, *.bak -MaxFileSizeMB 50 -IncludeHidden
+Scans D drive including hidden files, excluding log/backup files, processing files up to 50MB.
 
 .NOTES
 Always review findings carefully - false positives are common.
@@ -80,7 +75,10 @@ function Invoke-CredHunt {
         [switch]$NoSummary,
         
         [Parameter()]
-        [int]$MaxFileSizeMB = 20
+        [int]$MaxFileSizeMB = 20,
+        
+        [Parameter()]
+        [switch]$IncludeHidden  # NEW PARAMETER
     )
 
     # ANSI color code definitions
@@ -102,12 +100,16 @@ function Invoke-CredHunt {
         Recurse     = $true
         File        = $true
         ErrorAction = 'SilentlyContinue'
-        Force       = $true   # <- Always include hidden/system files
     }
     
     # Add Include/Exclude only if explicitly provided
     if ($PSBoundParameters.ContainsKey('Include')) { $gciParams['Include'] = $Include }
     if ($PSBoundParameters.ContainsKey('Exclude')) { $gciParams['Exclude'] = $Exclude }
+    
+    # Add -Force if IncludeHidden is specified
+    if ($IncludeHidden) {
+        $gciParams['Force'] = $true
+    }
 
     # Initialize counters
     $fileCounter = 0
@@ -201,6 +203,7 @@ function Invoke-CredHunt {
         Write-Host "  Search path         : $(Resolve-Path $Path)"
         Write-Host "  Keywords            : $($Keywords -join ', ')"
         Write-Host "  Case sensitive      : $($CaseSensitive.IsPresent)"
+        Write-Host "  Include hidden      : $($IncludeHidden.IsPresent)"  # NEW SUMMARY LINE
         Write-Host "  Max file size       : ${MaxFileSizeMB}MB"
         if ($PSBoundParameters.ContainsKey('Include')) { Write-Host "  Included            : $($Include -join ', ')" }
         if ($PSBoundParameters.ContainsKey('Exclude')) { Write-Host "  Excluded            : $($Exclude -join ', ')" }
