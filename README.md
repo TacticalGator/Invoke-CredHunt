@@ -21,9 +21,9 @@ Invoke-CredHunt -Path "C:\Projects" -Keywords API_KEY, SECRET_TOKEN -CaseSensiti
 Custom Path with Case-Sensitive Search
 
 ```powershell
-Invoke-CredHunt -Path "C:\Users\Administrator\AppData" -NoSummary -Keywords password,administrator -Include *.conf,*.yaml,*.txt,*.db -Exclude *.dll,*.exe
+Invoke-CredHunt -Path "C:\Users\Administrator\AppData" -NoSummary -Exclude *.dll,*.exe -Keywords password,administrator -IncludeHidden
 ```
-More Examples
+Scan Including Hidden Files and Directory (*Takes longer)
 
 ```powershell
 Invoke-CredHunt -Path "\\server\share" -Include *.config, *.env -Exclude *.bak, *.tmp -MaxFileSizeMB 50
@@ -40,6 +40,7 @@ Scan Network Share with File Filters
 | `-MaxContext` | Context characters around matches | 100 |
 | `-CaseSensitive` | Enable case-sensitive search | False |
 | `-NoSummary` | Suppress scan summary report | False |
+| `-IncludeHidden` | Include hidden files and directories in the search | False |
 | `-MaxFileSizeMB` | Maximum file size to scan (MB) | 20 |
 
 # Requirements
