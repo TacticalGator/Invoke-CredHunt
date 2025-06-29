@@ -40,7 +40,7 @@ Scan Network Share with File Filters
 | `-MaxContext` | Context characters around matches | 100 |
 | `-CaseSensitive` | Enable case-sensitive search | False |
 | `-NoSummary` | Suppress scan summary report | False |
-| `-IncludeHidden` | Include hidden files and directories in the search | False |
+| `-IncludeHidden` | Include hidden files and directories | False |
 | `-MaxFileSizeMB` | Maximum file size to scan (MB) | 20 |
 
 # Requirements
