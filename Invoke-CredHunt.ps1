@@ -102,6 +102,7 @@ function Invoke-CredHunt {
         Recurse     = $true
         File        = $true
         ErrorAction = 'SilentlyContinue'
+        Force       = $true   # <- Always include hidden/system files
     }
     
     # Add Include/Exclude only if explicitly provided
