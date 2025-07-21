@@ -1,5 +1,8 @@
 # Invoke-CredHunt
-Invoke-CredHunt is a powerful PowerShell script designed to identify potential credential leaks by scanning files for sensitive keywords. It provides security professionals and system administrators with an efficient way to hunt for exposed credentials in file systems, with detailed context highlighting and comprehensive scanning metrics.
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![Language: PowerShell](https://img.shields.io/badge/Language-PowerShell-blue)
+
+Invoke-CredHunt is a simple PowerShell script designed to identify potential credential leaks by scanning files for sensitive keywords. It provides security professionals and system administrators with an efficient way to hunt for exposed credentials in file systems, with detailed context highlighting and comprehensive scanning metrics.
 
 # Key Features
 - 🔍 Smart Keyword Detection: Searches for credentials using customizable patterns
