@@ -57,5 +57,5 @@ Scan Network Share with File Filters
 5. Use in test environments first to understand behavior
 
 # License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/TacticalGator/Invoke-CredHunt/blob/main/LICENSE) file for details.
+This project is licensed under the GPLv3 License - see the [LICENSE](https://github.com/TacticalGator/Invoke-CredHunt/blob/main/LICENSE) file for details.
 > Disclaimer: This tool is for security auditing and educational purposes only. Never use on production systems without proper authorization. The maintainers are not responsible for any misuse or damage caused.
